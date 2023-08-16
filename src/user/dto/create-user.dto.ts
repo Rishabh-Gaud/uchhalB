@@ -11,6 +11,10 @@ import {
 export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
+  username: string;
+
+  @IsOptional()
+  @IsString()
   first_name: string;
 
   @IsOptional()
@@ -32,4 +36,14 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   address: string;
+}
+
+export class LoginDTO {
+  @IsNotEmpty()
+  @IsString()
+  userkey: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
 }
