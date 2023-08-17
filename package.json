@@ -1,6 +1,5 @@
 {
-
-  "name": "uchhal",
+  "name": "backend",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -27,6 +26,7 @@
     "@nestjs/mongoose": "^10.0.1",
     "@nestjs/platform-express": "^10.0.0",
     "bcrypt": "^5.1.0",
+    "child_process": "^1.0.2",
     "class-validator": "^0.14.0",
     "mongoose": "^7.4.3",
     "reflect-metadata": "^0.1.13",
@@ -72,3 +72,4 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
+}
