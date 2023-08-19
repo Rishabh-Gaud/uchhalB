@@ -5,30 +5,15 @@ import { UpdateCompilerDto } from './dto/update-compiler.dto';
 
 @Controller('compiler')
 export class CompilerController {
-  constructor(private readonly compilerService: CompilerService) {}
+  constructor(private readonly compilerService: CompilerService) { }
 
   @Post()
-  create(@Body() createCompilerDto: CreateCompilerDto) {
-    return this.compilerService.create(createCompilerDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.compilerService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.compilerService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCompilerDto: UpdateCompilerDto) {
-    return this.compilerService.update(+id, updateCompilerDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.compilerService.remove(+id);
+  async create(@Body() body: { codeCpp: string }) {
+    try {
+      const data = await this.compilerService.executeCode(body.codeCpp);
+      return data;
+    } catch (error) {
+      return error;
+    }
   }
 }
