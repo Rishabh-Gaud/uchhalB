@@ -8,9 +8,9 @@ export class CompilerController {
   constructor(private readonly compilerService: CompilerService) { }
 
   @Post()
-  async create(@Body() body: { codeCpp: string }) {
+  async create(@Body() body: { codeCpp: string, problemId:string }) {
     try {
-      const data = await this.compilerService.executeCode(body.codeCpp);
+      const data = await this.compilerService.executeCode(body.codeCpp, body.problemId);
       return data;
     } catch (error) {
       return error;
