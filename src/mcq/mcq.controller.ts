@@ -20,10 +20,34 @@ export class McqController {
     }
   }
 
+  @Post('/mathmcq')
+  async createMathMCQ(@Body() createMcqDto: CreateMcqDto) {
+    try {
+      const createProblem = await this.mcqService.create(
+        createMcqDto,
+      );
+      return { statusCode: 201, isSuccess: true, data: createProblem };
+    } catch (error) {
+      console.log('[SERVER ERROR][MCQController:create]: ', error);
+      return { statusCode: 500, isSuccess: false, error };
+    }
+  }
+
   @Get()
  async findAll() {
     try {
       const data = await this.mcqService.findAll();
+      return { statusCode: 200, isSuccess: true, data };
+    } catch (error) {
+      console.log('[SERVER ERROR][MCQController:findAll]: ', error);
+      return { statusCode: 500, isSuccess: false, error };
+    }
+  }
+
+  @Get('/quiz')
+ async quiz() {
+    try {
+      const data = await this.mcqService.quiz();
       return { statusCode: 200, isSuccess: true, data };
     } catch (error) {
       console.log('[SERVER ERROR][MCQController:findAll]: ', error);

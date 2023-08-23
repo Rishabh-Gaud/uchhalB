@@ -22,6 +22,9 @@ export class CreateMcqDto {
   @IsString()
   explanation: string;
 
+  @IsString()
+  description: string;
+
   @IsNotEmpty()
   correct: string;
 

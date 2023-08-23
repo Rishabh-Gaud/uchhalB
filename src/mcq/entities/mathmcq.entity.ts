@@ -1,12 +1,11 @@
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Option } from './option.entity';
 
-export type MCQDocument = MCQ & Document;
+export type MathMCQDocument = MathMCQ & Document;
 
 @Schema()
-export class MCQ extends Document {
+export class MathMCQ extends Document {
   @Prop({ required: true })
   title: string;
 
@@ -20,7 +19,7 @@ export class MCQ extends Document {
   explanation: string;
 
   @Prop({ required: true })
-  description: string;
+  description:string;
 
   @Prop({ required: true })
   correct: string;
@@ -29,11 +28,4 @@ export class MCQ extends Document {
   options: Option[];
 }
 
-export const MCQSchema = SchemaFactory.createForClass(MCQ);
-
-// mcqquestion = {
-// 	id:number;
-// 	explanation?: string;
-// 	options:string[];
-// 	correctoption:number;
-// }
+export const MathMCQSchema = SchemaFactory.createForClass(MathMCQ);
