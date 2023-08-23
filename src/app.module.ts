@@ -8,6 +8,8 @@ import { CodingBankModule } from './coding-bank/coding-bank.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './interceptor/logging.interceptor';
 import { CompilerModule } from './compiler/compiler.module';
+import { McqModule } from './mcq/mcq.module';
+import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { CompilerModule } from './compiler/compiler.module';
     UserModule,
     CodingBankModule,
     CompilerModule,
+    McqModule,
+    TestModule,
   ],
   controllers: [AppController],
   providers: [

@@ -53,4 +53,7 @@ export class CreateCodingBankDto {
 
   @IsOptional()
   example: [];
+
+  @IsOptional()
+  testCase: []
 }

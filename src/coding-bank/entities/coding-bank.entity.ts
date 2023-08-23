@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Example } from './example.entity';
+import { TestCase } from './test-case.entity';
 
 export type CodingBankDocument = CodingBank & Document;
 
@@ -29,6 +30,9 @@ export class CodingBank extends Document {
 
   @Prop([Example])
   example: Example[];
+
+  @Prop([TestCase])
+  testCase: TestCase[];
 
   @Prop({ default: false })
   constraints: string;
