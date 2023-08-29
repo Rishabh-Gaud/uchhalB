@@ -6,6 +6,7 @@ import { MCQ, MCQDocument } from './entities/mcq.entity';
 import {MathMCQDocument, MathMCQ} from './entities/mathmcq.entity';
 import { Model } from 'mongoose';
 
+
 @Injectable()
 export class McqService {
   constructor(
@@ -49,7 +50,10 @@ export class McqService {
 
   async quiz() {
     try {
-      const data = await this.mathMcqModel.find().exec();
+      var mapping = {
+        sriram: this.mcqModel
+      };
+      const data = await mapping["sriram"].aggregate([{ $sample: { size: 2 } }]);
       return data;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
