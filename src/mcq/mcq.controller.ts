@@ -44,6 +44,17 @@ export class McqController {
     }
   }
 
+  @Get("/topics")
+ async gettopics(@Body() subject: any) {
+    try {
+      const data = await this.mcqService.gettopics(subject.subject,);
+      return { statusCode: 200, isSuccess: true, data };
+    } catch (error) {
+      console.log('[SERVER ERROR][MCQController:findAll]: ', error);
+      return { statusCode: 500, isSuccess: false, error };
+    }
+  }
+
   @Get('/quiz')
  async quiz() {
     try {

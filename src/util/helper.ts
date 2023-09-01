@@ -2,6 +2,7 @@ import compileRun from "compile-run";
 
 export async function runTestCases(testCases, cppCode: string) {
     let resultList = [];
+    let count = 0;
     for (const testCase of testCases) {
         const { input, expectedOutput } = testCase
         let actualCheckedOutput = '';
@@ -21,10 +22,11 @@ export async function runTestCases(testCases, cppCode: string) {
         if (actualCheckedOutput == ExpectedCheckedOutput) {
             let temp = { isAccept: true, data: `Test case passed: ${actualOutput}` };
             resultList.push(temp);
+            count = count + 1;
         } else {
             let temp = { isAccept: false, data: { expectedOutput, actualOutput } };
             resultList.push(temp);
         }
     }
-    return resultList;
+    return {resultList,count};
 }
