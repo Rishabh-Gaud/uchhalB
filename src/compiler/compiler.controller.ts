@@ -16,4 +16,14 @@ export class CompilerController {
       return error;
     }
   }
+
+  @Post('submit')
+  async submitted(@Body() body: { codeCpp: string, problemId:string, examples:any }) {
+    try {
+      const data = await this.compilerService.submittedcode(body.codeCpp, body.problemId, body.examples);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
 }

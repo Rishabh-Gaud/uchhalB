@@ -10,12 +10,7 @@ export class TestCase extends Document {
 
   @Prop({ required: true })
   outputText: string;
-
-  @Prop({ required: false })
-  explanation: string;
-
-  @Prop({ required: false })
-  img: string;
+  
 }
 
 export const ExampleSchema = SchemaFactory.createForClass(TestCase);
