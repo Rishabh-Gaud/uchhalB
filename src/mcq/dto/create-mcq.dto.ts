@@ -6,17 +6,9 @@ import {
 } from 'class-validator';
 
 export class CreateMcqDto {
-  @IsNotEmpty()
-  @IsString()
-  title: string;
-
   @IsOptional()
   @IsString()
   category: string;
-
-  @IsOptional()
-  @IsString()
-  difficulty: string;
 
   @IsNotEmpty()
   @IsString()
@@ -27,10 +19,6 @@ export class CreateMcqDto {
 
   @IsNotEmpty()
   correct: string;
-
-  @IsOptional()
-  @IsString()
-  link: string;
 
   @IsOptional()
   options: []

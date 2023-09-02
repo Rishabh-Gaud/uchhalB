@@ -1,11 +1,10 @@
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type MCQDocument = MCQ & Document;
+export type CPPDocument = CPP & Document;
 
 @Schema()
-export class MCQ extends Document {
+export class CPP extends Document {
   @Prop({ required: true })
   category: string;
 
@@ -22,11 +21,4 @@ export class MCQ extends Document {
   options: String[];
 }
 
-export const MCQSchema = SchemaFactory.createForClass(MCQ);
-
-// mcqquestion = {
-// 	id:number;
-// 	explanation?: string;
-// 	options:string[];
-// 	correctoption:number;
-// }
+export const CPPSchema = SchemaFactory.createForClass(CPP);

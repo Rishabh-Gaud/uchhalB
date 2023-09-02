@@ -8,10 +8,10 @@ export class McqController {
   constructor(private readonly mcqService: McqService) { }
 
   @Post()
-  async create(@Body() createMcqDto: CreateMcqDto) {
+  async create(@Body() data:any) {
     try {
       const createProblem = await this.mcqService.create(
-        createMcqDto,
+        data.data, data.key,
       );
       return { statusCode: 201, isSuccess: true, data: createProblem };
     } catch (error) {
@@ -20,23 +20,34 @@ export class McqController {
     }
   }
 
-  @Post('/mathmcq')
-  async createMathMCQ(@Body() createMcqDto: CreateMcqDto) {
-    try {
-      const createProblem = await this.mcqService.create(
-        createMcqDto,
-      );
-      return { statusCode: 201, isSuccess: true, data: createProblem };
-    } catch (error) {
-      console.log('[SERVER ERROR][MCQController:create]: ', error);
-      return { statusCode: 500, isSuccess: false, error };
-    }
-  }
+  // @Post('/mathmcq')
+  // async createMathMCQ(@Body() createMcqDto: CreateMcqDto) {
+  //   try {
+  //     const createProblem = await this.mcqService.create(
+  //       createMcqDto,
+  //     );
+  //     return { statusCode: 201, isSuccess: true, data: createProblem };
+  //   } catch (error) {
+  //     console.log('[SERVER ERROR][MCQController:create]: ', error);
+  //     return { statusCode: 500, isSuccess: false, error };
+  //   }
+  // }
 
   @Get()
  async findAll() {
     try {
       const data = await this.mcqService.findAll();
+      return { statusCode: 200, isSuccess: true, data };
+    } catch (error) {
+      console.log('[SERVER ERROR][MCQController:findAll]: ', error);
+      return { statusCode: 500, isSuccess: false, error };
+    }
+  }
+
+  @Post("/topics")
+ async gettopics(@Body() subject: any) {
+    try {
+      const data = await this.mcqService.gettopics(subject.subject,);
       return { statusCode: 200, isSuccess: true, data };
     } catch (error) {
       console.log('[SERVER ERROR][MCQController:findAll]: ', error);
