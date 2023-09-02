@@ -48,7 +48,7 @@ export class McqService {
     @InjectModel(VerbalAbility.name)
     private VerbalAbilityModel: Model<VerbalAbilityDocument>
   ) { }
-  async create(createMcqDto: CreateMcqDto) {
+  async create(createMcqDto: CreateMcqDto, subject:string) {
     try {
       var mapping = {
         sriram: this.mcqModel,
@@ -61,7 +61,7 @@ export class McqService {
         verbalreasoning:this.VerbalReasoningModel,
         verbalability:this.VerbalAbilityModel
       };
-      const questionCreated = await new this.mcqModel(createMcqDto);
+      const questionCreated = await new mapping[subject](createMcqDto);
       await questionCreated.save();
       return questionCreated;
     } catch (error) {
