@@ -3,8 +3,8 @@ import { CreateMcqDto } from './dto/create-mcq.dto';
 import { UpdateMcqDto } from './dto/update-mcq.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { MCQ, MCQDocument } from './entities/mcq.entity';
-import {MathMCQDocument, MathMCQ} from './entities/mathmcq.entity';
-import {CPP, CPPDocument} from './entities/CodingLanguages/cpp.entity'
+import { MathMCQDocument, MathMCQ } from './entities/mathmcq.entity';
+import { CPP, CPPDocument } from './entities/CodingLanguages/cpp.entity'
 import { CPrograming, CProgramingDocument } from './entities/CodingLanguages/cProgramming.entity';
 import { ArithmaticAptitude, ArithmaticAptitudeDocument } from './entities/TechAptitude/arithmaticAptitude.entity';
 import { DataInterpretation, DataInterpretationDocument } from './entities/TechAptitude/dataInterpretation.entity';
@@ -48,18 +48,18 @@ export class McqService {
     @InjectModel(VerbalAbility.name)
     private VerbalAbilityModel: Model<VerbalAbilityDocument>
   ) { }
-  async create(createMcqDto: CreateMcqDto, subject:string) {
+  async create(createMcqDto: CreateMcqDto, subject: string) {
     try {
       var mapping = {
         sriram: this.mcqModel,
-        cpp:this.CPPModel,
-        cprogramming:this.CProgramingModel,
-        arithmaticaptitude:this.ArithmaticAptitudeModel,
-        datainterpretation:this.DataInterpretationModel,
-        logicalreasoning:this.LogicalReasoningModel,
-        nonverbalreasoning:this.NonVerbalReasoningModel,
-        verbalreasoning:this.VerbalReasoningModel,
-        verbalability:this.VerbalAbilityModel
+        cpp: this.CPPModel,
+        cprogramming: this.CProgramingModel,
+        arithmaticaptitude: this.ArithmaticAptitudeModel,
+        datainterpretation: this.DataInterpretationModel,
+        logicalreasoning: this.LogicalReasoningModel,
+        nonverbalreasoning: this.NonVerbalReasoningModel,
+        verbalreasoning: this.VerbalReasoningModel,
+        verbalability: this.VerbalAbilityModel
       };
       const questionCreated = await new mapping[subject](createMcqDto);
       await questionCreated.save();
@@ -81,6 +81,27 @@ export class McqService {
     }
   }
 
+  async fetchTopicProblem(subject: string, category: string) {
+    try {
+      var mapping = {
+        sriram: this.mcqModel,
+        cpp: this.CPPModel,
+        cprogramming: this.CProgramingModel,
+        arithmaticaptitude: this.ArithmaticAptitudeModel,
+        datainterpretation: this.DataInterpretationModel,
+        logicalreasoning: this.LogicalReasoningModel,
+        nonverbalreasoning: this.NonVerbalReasoningModel,
+        verbalreasoning: this.VerbalReasoningModel,
+        verbalability: this.VerbalAbilityModel
+      };
+      const questions = await mapping[subject].find({ category }).exec();
+      return questions;
+    } catch (error) {
+      console.log('[SERVER ERROR] [McqService: fetchTopicProblem]', error);
+      throw error;
+    }
+  }
+
   async findAll() {
     try {
       const data = await this.mcqModel.find().exec();
@@ -91,18 +112,18 @@ export class McqService {
     }
   }
 
-  async gettopics(subject:string) {
+  async gettopics(subject: string) {
     try {
       var mapping = {
         sriram: this.mcqModel,
-        cpp:this.CPPModel,
-        cprogramming:this.CProgramingModel,
-        arithmaticaptitude:this.ArithmaticAptitudeModel,
-        datainterpretation:this.DataInterpretationModel,
-        logicalreasoning:this.LogicalReasoningModel,
-        nonverbalreasoning:this.NonVerbalReasoningModel,
-        verbalreasoning:this.VerbalReasoningModel,
-        verbalability:this.VerbalAbilityModel
+        cpp: this.CPPModel,
+        cprogramming: this.CProgramingModel,
+        arithmaticaptitude: this.ArithmaticAptitudeModel,
+        datainterpretation: this.DataInterpretationModel,
+        logicalreasoning: this.LogicalReasoningModel,
+        nonverbalreasoning: this.NonVerbalReasoningModel,
+        verbalreasoning: this.VerbalReasoningModel,
+        verbalability: this.VerbalAbilityModel
       };
       console.log(subject);
       const data = await mapping[subject].distinct("category").exec();
