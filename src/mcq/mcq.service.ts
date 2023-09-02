@@ -116,9 +116,44 @@ export class McqService {
   async quiz() {
     try {
       var mapping = {
-        sriram: this.mcqModel
+        sriram: this.mcqModel,
+        cpp:this.CPPModel,
+        cprogramming:this.CProgramingModel,
+        arithmaticaptitude:this.ArithmaticAptitudeModel,
+        datainterpretation:this.DataInterpretationModel,
+        logicalreasoning:this.LogicalReasoningModel,
+        nonverbalreasoning:this.NonVerbalReasoningModel,
+        verbalreasoning:this.VerbalReasoningModel,
+        verbalability:this.VerbalAbilityModel
       };
-      const data = await mapping["sriram"].aggregate([{ $sample: { size: 2 } }]);
+      const arithmaticqq = await mapping["sriram"].aggregate([{ $sample: { size: 3 } }]);
+      const datainterpretationqq = await mapping["sriram"].aggregate([{ $sample: { size: 3 } }]);
+      const logicalreasoningqq = await mapping["sriram"].aggregate([{ $sample: { size: 3 } }]);
+      const verbalreasoningqq = await mapping["sriram"].aggregate([{ $sample: { size: 3 } }]);
+      const verbalabilityqq = await mapping["sriram"].aggregate([{ $sample: { size: 3 } }]);
+      const data = arithmaticqq.concat(datainterpretationqq,logicalreasoningqq,verbalabilityqq,verbalreasoningqq);
+      return data;
+    } catch (error) {
+      console.log('[SERVER ERROR][McqService:findAll]: ', error);
+      throw error;
+    }
+  }
+
+  async subjectquiz(subject: string){
+    try{
+      var mapping = {
+        sriram: this.mcqModel,
+        cpp:this.CPPModel,
+        cprogramming:this.CProgramingModel,
+        arithmaticaptitude:this.ArithmaticAptitudeModel,
+        datainterpretation:this.DataInterpretationModel,
+        logicalreasoning:this.LogicalReasoningModel,
+        nonverbalreasoning:this.NonVerbalReasoningModel,
+        verbalreasoning:this.VerbalReasoningModel,
+        verbalability:this.VerbalAbilityModel
+      };
+
+      const data = await mapping[subject].aggregate([{ $sample: {size: 10}}]);
       return data;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
