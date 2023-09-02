@@ -34,7 +34,7 @@ export class CodingBankController {
   @Get(':title')
   async findOne(@Param('title') title: string) {
     try {
-      const data = await this.codingBankService.findOne(title);
+      const data = await this.codingBankService.findOne(title.replace(/-/g, " "));
       return { statusCode: 200, isSuccess: true, data };
     } catch (error) {
       console.log('[SERVER ERROR][CodingBankController:findOne]: ', error);
