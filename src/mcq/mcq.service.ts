@@ -4,16 +4,37 @@ import { UpdateMcqDto } from './dto/update-mcq.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { MCQ, MCQDocument } from './entities/mcq.entity';
 import { MathMCQDocument, MathMCQ } from './entities/mathmcq.entity';
-import { CPP, CPPDocument } from './entities/CodingLanguages/cpp.entity'
-import { CPrograming, CProgramingDocument } from './entities/CodingLanguages/cProgramming.entity';
-import { ArithmaticAptitude, ArithmaticAptitudeDocument } from './entities/TechAptitude/arithmaticAptitude.entity';
-import { DataInterpretation, DataInterpretationDocument } from './entities/TechAptitude/dataInterpretation.entity';
-import { LogicalReasoning, LogicalReasoningDocument } from './entities/TechAptitude/logicalReasoning.entity';
-import { NonVerbalReasoning, NonVerbalReasoningDocument } from './entities/TechAptitude/nonVerbalReasoning.entity';
-import { VerbalReasoning, VerbalReasoningDocument } from './entities/TechAptitude/VarbalReasoning.entity';
-import { VerbalAbility, VerbalAbilityDocument } from './entities/TechAptitude/verbalAbility.entity';
+import { CPP, CPPDocument } from './entities/CodingLanguages/cpp.entity';
+import {
+  CPrograming,
+  CProgramingDocument,
+} from './entities/CodingLanguages/cProgramming.entity';
+import {
+  ArithmaticAptitude,
+  ArithmaticAptitudeDocument,
+} from './entities/TechAptitude/arithmaticAptitude.entity';
+import {
+  DataInterpretation,
+  DataInterpretationDocument,
+} from './entities/TechAptitude/dataInterpretation.entity';
+import {
+  LogicalReasoning,
+  LogicalReasoningDocument,
+} from './entities/TechAptitude/logicalReasoning.entity';
+import {
+  NonVerbalReasoning,
+  NonVerbalReasoningDocument,
+} from './entities/TechAptitude/nonVerbalReasoning.entity';
+import {
+  VerbalReasoning,
+  VerbalReasoningDocument,
+} from './entities/TechAptitude/VarbalReasoning.entity';
+import {
+  VerbalAbility,
+  VerbalAbilityDocument,
+} from './entities/TechAptitude/verbalAbility.entity';
 import { Model } from 'mongoose';
-
+import { AesEncryptUtil } from 'src/util/AesEncryptUtil';
 
 @Injectable()
 export class McqService {
@@ -46,8 +67,8 @@ export class McqService {
     private VerbalReasoningModel: Model<VerbalReasoningDocument>,
 
     @InjectModel(VerbalAbility.name)
-    private VerbalAbilityModel: Model<VerbalAbilityDocument>
-  ) { }
+    private VerbalAbilityModel: Model<VerbalAbilityDocument>,
+  ) {}
   async create(createMcqDto: CreateMcqDto, subject: string) {
     try {
       var mapping = {
@@ -59,7 +80,7 @@ export class McqService {
         logicalreasoning: this.LogicalReasoningModel,
         nonverbalreasoning: this.NonVerbalReasoningModel,
         verbalreasoning: this.VerbalReasoningModel,
-        verbalability: this.VerbalAbilityModel
+        verbalability: this.VerbalAbilityModel,
       };
       const questionCreated = await new mapping[subject](createMcqDto);
       await questionCreated.save();
@@ -92,10 +113,11 @@ export class McqService {
         logicalreasoning: this.LogicalReasoningModel,
         nonverbalreasoning: this.NonVerbalReasoningModel,
         verbalreasoning: this.VerbalReasoningModel,
-        verbalability: this.VerbalAbilityModel
+        verbalability: this.VerbalAbilityModel,
       };
-      const questions = await mapping[subject].find({ category }).exec();
-      return questions;
+      const res = await mapping[subject].find({ category }).exec();
+      const encryptData = AesEncryptUtil.aesEncrypt(res);
+      return encryptData;
     } catch (error) {
       console.log('[SERVER ERROR] [McqService: fetchTopicProblem]', error);
       throw error;
@@ -123,10 +145,9 @@ export class McqService {
         logicalreasoning: this.LogicalReasoningModel,
         nonverbalreasoning: this.NonVerbalReasoningModel,
         verbalreasoning: this.VerbalReasoningModel,
-        verbalability: this.VerbalAbilityModel
+        verbalability: this.VerbalAbilityModel,
       };
-      console.log(subject);
-      const data = await mapping[subject].distinct("category").exec();
+      const data = await mapping[subject].distinct('category').exec();
       return data;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
@@ -137,9 +158,11 @@ export class McqService {
   async quiz() {
     try {
       var mapping = {
-        sriram: this.mcqModel
+        sriram: this.mcqModel,
       };
-      const data = await mapping["sriram"].aggregate([{ $sample: { size: 2 } }]);
+      const data = await mapping['sriram'].aggregate([
+        { $sample: { size: 2 } },
+      ]);
       return data;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
@@ -147,15 +170,13 @@ export class McqService {
     }
   }
 
-  findOne(id: string) {
-    return this.mcqModel.findById({ _id: id });
-  }
-
-  update(id: number, updateMcqDto: UpdateMcqDto) {
-    return `This action updates a #${id} mcq`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} mcq`;
+  async findOne(id: string) {
+    try {
+      const res = this.mcqModel.findById({ _id: id });
+      return res;
+    } catch (error) {
+      console.log('[SERVER ERROR][McqService:findOne]: ', error);
+      throw error;
+    }
   }
 }

@@ -77,13 +77,4 @@ export class McqController {
     }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMcqDto: UpdateMcqDto) {
-    return this.mcqService.update(+id, updateMcqDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mcqService.remove(+id);
-  }
 }
