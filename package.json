@@ -28,6 +28,7 @@
     "bcrypt": "^5.1.0",
     "class-validator": "^0.14.0",
     "compile-run": "^2.3.4",
+    "crypto-js": "^4.1.1",
     "mongoose": "^7.4.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
