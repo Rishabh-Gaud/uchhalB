@@ -6,12 +6,12 @@ import {
   Logger,
   HttpStatus,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs/';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  intercept(context: ExecutionContext, next: CallHandler) {
     const request = context.switchToHttp().getRequest();
     const className = context.getClass().name;
     const handlerName = context.getHandler().name;
