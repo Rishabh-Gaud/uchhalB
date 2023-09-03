@@ -66,6 +66,17 @@ export class McqController {
     }
   }
 
+  @Get('/quiz/:subject')
+ async subjectquiz(@Param('subject') subject: string) {
+    try {
+      const data = await this.mcqService.subjectquiz(subject);
+      return { statusCode: 200, isSuccess: true, data };
+    } catch (error) {
+      console.log('[SERVER ERROR][MCQController:findAll]: ', error);
+      return { statusCode: 500, isSuccess: false, error };
+    }
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {

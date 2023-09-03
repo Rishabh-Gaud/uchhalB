@@ -127,7 +127,10 @@ export class McqService {
   async findAll() {
     try {
       const data = await this.mcqModel.find().exec();
-      return data;
+      console.log(data, '>>>>>>>>>>>>>>>>>');
+
+      const encryptData = AesEncryptUtil.aesEncrypt(data);
+      return encryptData;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
       throw error;
@@ -148,6 +151,8 @@ export class McqService {
         verbalability: this.VerbalAbilityModel,
       };
       const data = await mapping[subject].distinct('category').exec();
+      const encryptData = AesEncryptUtil.aesEncrypt(data);
+      return encryptData;
       return data;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
@@ -159,11 +164,46 @@ export class McqService {
     try {
       var mapping = {
         sriram: this.mcqModel,
+        cpp:this.CPPModel,
+        cprogramming:this.CProgramingModel,
+        arithmaticaptitude:this.ArithmaticAptitudeModel,
+        datainterpretation:this.DataInterpretationModel,
+        logicalreasoning:this.LogicalReasoningModel,
+        nonverbalreasoning:this.NonVerbalReasoningModel,
+        verbalreasoning:this.VerbalReasoningModel,
+        verbalability:this.VerbalAbilityModel
       };
-      const data = await mapping['sriram'].aggregate([
-        { $sample: { size: 2 } },
-      ]);
-      return data;
+      const arithmaticqq = await mapping["arithmaticaptitude"].aggregate([{ $sample: { size: 3 } }]);
+      const datainterpretationqq = await mapping["datainterpretation"].aggregate([{ $sample: { size: 3 } }]);
+      const logicalreasoningqq = await mapping["logicalreasoning"].aggregate([{ $sample: { size: 3 } }]);
+      const verbalreasoningqq = await mapping["verbalreasoning"].aggregate([{ $sample: { size: 3 } }]);
+      const verbalabilityqq = await mapping["verbalability"].aggregate([{ $sample: { size: 3 } }]);
+      const data = arithmaticqq.concat(datainterpretationqq,logicalreasoningqq,verbalabilityqq,verbalreasoningqq);
+      const encryptData = AesEncryptUtil.aesEncrypt(data);
+      return encryptData;
+    } catch (error) {
+      console.log('[SERVER ERROR][McqService:findAll]: ', error);
+      throw error;
+    }
+  }
+
+  async subjectquiz(subject: string){
+    try{
+      var mapping = {
+        sriram: this.mcqModel,
+        cpp:this.CPPModel,
+        cprogramming:this.CProgramingModel,
+        arithmaticaptitude:this.ArithmaticAptitudeModel,
+        datainterpretation:this.DataInterpretationModel,
+        logicalreasoning:this.LogicalReasoningModel,
+        nonverbalreasoning:this.NonVerbalReasoningModel,
+        verbalreasoning:this.VerbalReasoningModel,
+        verbalability:this.VerbalAbilityModel
+      };
+
+      const data = await mapping[subject].aggregate([{ $sample: {size: 10}}]);
+      const encryptData = AesEncryptUtil.aesEncrypt(data);
+      return encryptData;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
       throw error;
