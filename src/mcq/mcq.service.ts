@@ -127,7 +127,10 @@ export class McqService {
   async findAll() {
     try {
       const data = await this.mcqModel.find().exec();
-      return data;
+      console.log(data, '>>>>>>>>>>>>>>>>>');
+
+      const encryptData = AesEncryptUtil.aesEncrypt(data);
+      return encryptData;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
       throw error;
@@ -148,6 +151,8 @@ export class McqService {
         verbalability: this.VerbalAbilityModel,
       };
       const data = await mapping[subject].distinct('category').exec();
+      const encryptData = AesEncryptUtil.aesEncrypt(data);
+      return encryptData;
       return data;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
@@ -163,7 +168,8 @@ export class McqService {
       const data = await mapping['sriram'].aggregate([
         { $sample: { size: 2 } },
       ]);
-      return data;
+      const encryptData = AesEncryptUtil.aesEncrypt(data);
+      return encryptData;
     } catch (error) {
       console.log('[SERVER ERROR][McqService:findAll]: ', error);
       throw error;
