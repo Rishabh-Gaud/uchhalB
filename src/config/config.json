@@ -1,0 +1,6 @@
+{
+  "mongo": {
+    "SECRET_KEY": "mongodb+srv://thegreatoffer:omqk7uFocpZQkhst@cluster0.6vhl28n.mongodb.net/"
+  },
+  "AesPrivateKey": "w3yjiuNwhL7XeVpvaDQWqS9xlW6itiWUZBawEwodFdXiJJterVNtBFQqnUmm8H2qvGdmT"
+}
