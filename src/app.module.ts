@@ -13,7 +13,7 @@ import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(mongoCreds.SECRET_KEY),
+    MongooseModule.forRoot(process.env.SECRET_KEY),
     UserModule,
     CodingBankModule,
     CompilerModule,
