@@ -5,10 +5,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import bcrypt from 'bcrypt';
+import { UserDetail, UserDetailDocument } from './entities/user-detail.entity';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(UserDetail.name)
+    private userDetailModel: Model<UserDetailDocument>,
+  ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     try {
@@ -27,7 +32,14 @@ export class UserService {
         first_name,
         last_name,
       });
+      const userCreation = new this.userDetailModel({
+        email,
+        username,
+        first_name,
+        last_name,
+      });
       await user.save();
+      await userCreation.save();
       return user;
     } catch (error) {
       console.log('[ERROR] [USER SERVICE : createUser]', error);
@@ -76,6 +88,23 @@ export class UserService {
     } catch (error) {
       console.log('[ERROR] [USER SERVICE : findOne]', error);
       throw error;
+    }
+  }
+  
+  async update(username: string, updateUserDto: UpdateUserDto) {
+    try {
+      const updatedDocument = await this.userDetailModel
+        .findOneAndUpdate(
+          { username },
+          { $set: updateUserDto },
+          { new: true }, // Return the updated document
+        )
+        .exec();
+
+      return updatedDocument;
+    } catch (error) {
+      console.log('[SERVER ERROR][UserService:update]: ', error);
+      return { statusCode: 500, isSuccess: false, error };
     }
   }
 }

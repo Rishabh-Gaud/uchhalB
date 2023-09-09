@@ -164,21 +164,36 @@ export class McqService {
     try {
       var mapping = {
         sriram: this.mcqModel,
-        cpp:this.CPPModel,
-        cprogramming:this.CProgramingModel,
-        arithmaticaptitude:this.ArithmaticAptitudeModel,
-        datainterpretation:this.DataInterpretationModel,
-        logicalreasoning:this.LogicalReasoningModel,
-        nonverbalreasoning:this.NonVerbalReasoningModel,
-        verbalreasoning:this.VerbalReasoningModel,
-        verbalability:this.VerbalAbilityModel
+        cpp: this.CPPModel,
+        cprogramming: this.CProgramingModel,
+        arithmaticaptitude: this.ArithmaticAptitudeModel,
+        datainterpretation: this.DataInterpretationModel,
+        logicalreasoning: this.LogicalReasoningModel,
+        nonverbalreasoning: this.NonVerbalReasoningModel,
+        verbalreasoning: this.VerbalReasoningModel,
+        verbalability: this.VerbalAbilityModel,
       };
-      const arithmaticqq = await mapping["arithmaticaptitude"].aggregate([{ $sample: { size: 3 } }]);
-      const datainterpretationqq = await mapping["datainterpretation"].aggregate([{ $sample: { size: 3 } }]);
-      const logicalreasoningqq = await mapping["logicalreasoning"].aggregate([{ $sample: { size: 3 } }]);
-      const verbalreasoningqq = await mapping["verbalreasoning"].aggregate([{ $sample: { size: 3 } }]);
-      const verbalabilityqq = await mapping["verbalability"].aggregate([{ $sample: { size: 3 } }]);
-      const data = arithmaticqq.concat(datainterpretationqq,logicalreasoningqq,verbalabilityqq,verbalreasoningqq);
+      const arithmaticqq = await mapping['arithmaticaptitude'].aggregate([
+        { $sample: { size: 3 } },
+      ]);
+      const datainterpretationqq = await mapping[
+        'datainterpretation'
+      ].aggregate([{ $sample: { size: 3 } }]);
+      const logicalreasoningqq = await mapping['logicalreasoning'].aggregate([
+        { $sample: { size: 3 } },
+      ]);
+      const verbalreasoningqq = await mapping['verbalreasoning'].aggregate([
+        { $sample: { size: 3 } },
+      ]);
+      const verbalabilityqq = await mapping['verbalability'].aggregate([
+        { $sample: { size: 3 } },
+      ]);
+      const data = arithmaticqq.concat(
+        datainterpretationqq,
+        logicalreasoningqq,
+        verbalabilityqq,
+        verbalreasoningqq,
+      );
       const encryptData = AesEncryptUtil.aesEncrypt(data);
       return encryptData;
     } catch (error) {
@@ -187,21 +202,23 @@ export class McqService {
     }
   }
 
-  async subjectquiz(subject: string){
-    try{
+  async subjectquiz(subject: string) {
+    try {
       var mapping = {
         sriram: this.mcqModel,
-        cpp:this.CPPModel,
-        cprogramming:this.CProgramingModel,
-        arithmaticaptitude:this.ArithmaticAptitudeModel,
-        datainterpretation:this.DataInterpretationModel,
-        logicalreasoning:this.LogicalReasoningModel,
-        nonverbalreasoning:this.NonVerbalReasoningModel,
-        verbalreasoning:this.VerbalReasoningModel,
-        verbalability:this.VerbalAbilityModel
+        cpp: this.CPPModel,
+        cprogramming: this.CProgramingModel,
+        arithmaticaptitude: this.ArithmaticAptitudeModel,
+        datainterpretation: this.DataInterpretationModel,
+        logicalreasoning: this.LogicalReasoningModel,
+        nonverbalreasoning: this.NonVerbalReasoningModel,
+        verbalreasoning: this.VerbalReasoningModel,
+        verbalability: this.VerbalAbilityModel,
       };
 
-      const data = await mapping[subject].aggregate([{ $sample: {size: 10}}]);
+      const data = await mapping[subject].aggregate([
+        { $sample: { size: 10 } },
+      ]);
       const encryptData = AesEncryptUtil.aesEncrypt(data);
       return encryptData;
     } catch (error) {
