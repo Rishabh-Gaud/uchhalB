@@ -9,9 +9,11 @@ import { LoggingInterceptor } from './interceptor/logging.interceptor';
 import { CompilerModule } from './compiler/compiler.module';
 import { McqModule } from './mcq/mcq.module';
 import { TestModule } from './test/test.module';
+import { JobsModule } from './jobs/jobs.module';
 
 @Module({
   imports: [
+
     MongooseModule.forRoot(
       'mongodb+srv://thegreatoffer:omqk7uFocpZQkhst@cluster0.6vhl28n.mongodb.net/',
     ),
@@ -20,6 +22,7 @@ import { TestModule } from './test/test.module';
     CompilerModule,
     McqModule,
     TestModule,
+    JobsModule,
   ],
   controllers: [AppController],
   providers: [
