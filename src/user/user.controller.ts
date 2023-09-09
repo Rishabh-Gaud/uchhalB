@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Patch } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, LoginDTO } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -47,6 +48,17 @@ export class UserController {
       return { statusCode: 200, isSuccess: true, data };
     } catch (error) {
       console.log('[ERROR] [USER CONTROLLER : findOne]', error);
+      return { statusCode: 500, isSuccess: false, error };
+    }
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    try {
+      const data = await this.userService.update(id, updateUserDto);
+      return { statusCode: 200, isSuccess: true, data };
+    } catch (error) {
+      console.log('[SERVER ERROR][UserController:update]: ', error);
       return { statusCode: 500, isSuccess: false, error };
     }
   }

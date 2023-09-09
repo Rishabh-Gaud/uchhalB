@@ -13,7 +13,10 @@ import { JobsModule } from './jobs/jobs.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot("mongodb+srv://thegreatoffer:omqk7uFocpZQkhst@cluster0.6vhl28n.mongodb.net/"),
+
+    MongooseModule.forRoot(
+      'mongodb+srv://thegreatoffer:omqk7uFocpZQkhst@cluster0.6vhl28n.mongodb.net/',
+    ),
     UserModule,
     CodingBankModule,
     CompilerModule,
