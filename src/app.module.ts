@@ -12,7 +12,9 @@ import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.SECRET_KEY),
+    MongooseModule.forRoot(
+      'mongodb+srv://thegreatoffer:omqk7uFocpZQkhst@cluster0.6vhl28n.mongodb.net/',
+    ),
     UserModule,
     CodingBankModule,
     CompilerModule,
